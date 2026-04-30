@@ -232,7 +232,7 @@
             const sobrante = totalCobrado - precioTotal;
 
             resultadoElement.innerHTML=
-            `<p><strong> EN TOTAL HEMOS DADO:</strong> ${nclases} clases x ${precioSala}€ = <span id="totalPrecio">${precioTotal}</span></p>
+            `<p><strong> EN TOTAL HEMOS DADO:</strong> ${nclases} clases x ${precioSala}€ = <span id="totalPrecio">${precioTotal} €</span></p>
                 <div class="resumen"><p><strong>TOTAL personas 1 clase</strong> = ${unaclase}</p>
                 <p><strong> TOTAL personas 2 clases</strong> = ${dosclases}</p>
                 <p><strong>TOTAL personas</strong> ${unaclase + dosclases}</p>
@@ -265,9 +265,9 @@
                 </tr>
                 <tr>
                     <td colspan ="2">
-                        total cobrado (${totalCobrado.toFixed(2)}) - precio sala (${precioTotal}) = <span id="sobrante-txt"> ${sobrante.toFixed(2)}</span>
+                        total cobrado (${totalCobrado.toFixed(2)}€) - precio sala (${precioTotal} €) = <span id="sobrante-txt"> ${sobrante.toFixed(2)} €</span>
                     </td>
-                </tr>
+                </tr>0
             </table>
             <br>
             <br>
