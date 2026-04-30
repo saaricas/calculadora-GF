@@ -4,20 +4,56 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculadora GirlFit</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chicle&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
     <style>
         @font-face {
             font-family: 'LessDrama';
-            src: url('https://github.com/saaricas/calculadora-GF/blob/main/LessDramafont.ttf') format('ttf');
+            src: url('fonts/LessDramafont.ttf') format('ttf');
         }
         
         body{
             margin: 0;
             font-family: 'Montserrat';
         }
+        
         h1{
-            font-family: 'LessDrama', sans-serif !important;
+            font-family: 'Chicle', sans-serif !important;
             text-align: center;
-            font-size: clamp(20px, 2vw, 30px);
+            font-size: clamp(20px, 3vw, 4vw);
+            letter-spacing: 5px;
+        }
+        button.instru{
+            display: block;
+            position: right;
+            text-align: right;
+            font-size: 10px;
+            margin: 10px 10px;
+            background-color: aquamarine;
+            border-radius: 15px;
+            border: none;
+            padding: 5px 15px;
+        }
+        .alinearbtn{
+            display: flex;
+            justify-content: flex-end;
+        }
+        #howto{
+            margin: 0 10px 10px 10px;
+            background-color: #bee3f7;
+            padding: 5px 15px 15px 15px;
+            border-radius: 5px;
+            font-size: 12px
+        }
+        #howto ol, #howto ul{
+            padding-left: 20px;
+        }
+        .background-fit{
+            background-color: #bee3f7;
+            margin: 0 10px -2px 10px; 
         }
         h3{
             text-align: center;
@@ -56,7 +92,7 @@
             padding: 5px;
             border-radius: 5px;
         }
-        button{
+        button.calcular{
             background-color: aquamarine;
             border-radius: 15px;
             border: none;
@@ -132,6 +168,26 @@
         <img src="https://github.com/saaricas/calculadora-GF/blob/main/girlfit.png?raw=true" height="100">
     </div>
     
+    <div class="intro">
+        <div class="alinearbtn">
+            <button class="instru" onclick="showmore()">¿CÓMO FUNCIONA?</button>
+        </div>
+        <div class="hidden" id="howto">
+            <ol>
+                <li>Introduce el precio de la sala, si es distinto de 5€ (precio establecido por defecto)</li>
+                <li>Comienza a rellenar la tabla con los datos de cada mes:
+                    <ul>
+                        <li><strong>Mes</strong>: Escribe el nombre del mes. <em>(No es necesario pero es útil para después pasar captura)</em></li>
+                        <li><strong>Nº Clases</strong>: Escribe el número total de clases que se han dado ese mes.</li>
+                        <li><strong>1 Clase</strong>: Rellena este hueco con el número de personas que ese mes tenían solo <strong>una clase</strong> a la semana</li>
+                        <li><strong>2 Clases</strong>: Rellena este hueco con el número de personas que ese mes tenían <strong>dos clases</strong> a la semana</li>
+                    </ul>
+                </li>
+                <li>Una vez rellenados todos los campos, haz clic en <strong>Calcular</strong> para ver los resultados.</li>
+            </ol>
+            <p><strong><em>NOTA</em></strong>: No es necesario rellenar los 4 meses para hacer el cálculo. Se puede rellenar solo uno de ellos y funcionará.</p>
+        </div>
+    </div>
     
 
     <h3>Precio sala: <input id="precio-sala" type="number"></h3>
@@ -178,7 +234,7 @@
     </table>
     </div>
     <div style="display:flex; justify-content: center; padding:20px 0;">
-        <button onclick="CalcularCuotas()">Calcular</button>
+        <button class="calcular" onclick="CalcularCuotas()">Calcular</button>
     </div>
 
     
@@ -282,6 +338,18 @@
 
            resultadoElement.classList.remove("hidden");
 
+        }
+
+        function showmore(){
+            const howtoElement = document.getElementById("howto");
+            const alinearbtn = document.querySelector(".alinearbtn");
+            if (howtoElement.classList.contains("hidden")){
+                howtoElement.classList.remove("hidden");
+                alinearbtn.classList.add("background-fit");
+            } else {
+                howtoElement.classList.add("hidden");
+                alinearbtn.classList.remove("background-fit");
+            }
         }
 
     </script>
