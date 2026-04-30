@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora GirlFit</title>
+    <style>
+        @font-face {
+            font-family: 'LessDrama';
+            src: url('https://github.com/saaricas/calculadora-GF/blob/main/LessDramafont.ttf') format('ttf');
+        }
+        
+        body{
+            margin: 0;
+            font-family: 'Montserrat';
+        }
+        h1{
+            font-family: 'LessDrama', sans-serif !important;
+            text-align: center;
+            font-size: clamp(20px, 2vw, 30px);
+        }
+        h3{
+            text-align: center;
+        }
+        .cabecera{
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background-color: #fddc51 ;
+            padding: 10px 5px;
+        }
+        
+        table.inputs{
+            margin: 0 10vw;
+            width: 80vw;
+            border-collapse:collapse;
+        }
+        table.inputs th:first-child{
+            width:10vw;
+        }
+        .inputs th{
+            text-transform: uppercase;
+        }
+        .inputs th,.inputs td{
+            border: 2px solid #fddc51;
+            padding: 8px;
+            text-align: center;
+            max-width: 25vw;
+            font-size: clamp(10px, 2vw, 16px);
+        }
+
+        input{
+            border: none;
+            background-color: #b1def6bd;
+            max-width: 25vw;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        button{
+            background-color: aquamarine;
+            border-radius: 15px;
+            border: none;
+            padding: 5px 15px;
+            text-align: center;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 20px;
+        }
+        #resultado{
+            padding:15px 10%;
+            background-color: #ebd6b3;
+            text-align: center;
+        }
+        #resultado span{
+            background-color: #ff56e3;
+        }
+        #resultado .resumen{
+            display: flex;
+            justify-content: space-around;
+        }
+        table.resultados{
+            width: 80vw;
+            border-collapse: collapse;
+        }
+        .resultados th, .resultados td {
+            border: 2px solid #555555;
+            padding: 8px;
+            text-align: center;
+            max-width: 25vw;
+            font-size: clamp(10px, 2vw, 16px);
+        }
+        .resultados th{
+            background-color: #b1def6bd;
+        }
+        .explain{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .explain p{
+            margin: 0.2rem;
+            width: 40vw;
+        }
+        .hidden{
+            display: none;
+        }
+        @media screen and (max-width: 600px) {
+            table.inputs{
+                margin:5vw;
+                width: 90vw;
+            }
+            table.inputs th:first-child{
+            width:auto;
+        }
+        input{
+            width: 10vw;
+        }
+        .explain p{
+            margin: 0.2rem;
+            width: 80vw;
+        }
+           
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="cabecera">
+        <img src="https://github.com/saaricas/calculadora-GF/blob/main/girlfit.png?raw=true" height="100">
+        <h1>CALCULADORA PAGOS SALA</h1>
+        <img src="https://github.com/saaricas/calculadora-GF/blob/main/girlfit.png?raw=true" height="100">
+    </div>
+    
+    
+
+    <h3>Precio sala: <input id="precio-sala" type="number"></h3>
+    <div class="table-container">
+    <table class="inputs">
+        <tr>
+            <th>Mes</th>
+            <th>Nº Clases</th>
+            <th>1Clase</th>
+            <th>2 Clases</th>
+        </th>
+        <tr>
+            <td>
+                <input>
+            </td>
+            <td><input id="mes1_nclases" type="number"></td>
+            <td><input id="mes1_1clase" type="number"></td>
+            <td><input id="mes1_2clases" type="number"></td>
+        </tr>
+        <tr>
+            <td>
+                <input>
+            </td>
+            <td><input id="mes2_nclases" type="number"></td>
+            <td><input id="mes2_1clase" type="number"></td>
+            <td><input id="mes2_2clases" type="number"></td>
+        </tr>
+         <tr>
+            <td>
+                <input>
+            </td>
+            <td><input id="mes3_nclases" type="number"></td>
+            <td><input id="mes3_1clase" type="number"></td>
+            <td><input id="mes3_2clases" type="number"></td>
+        </tr>
+         <tr>
+            <td>
+                <input>
+            </td>
+            <td><input id="mes4_nclases" type="number"></td>
+            <td><input id="mes4_1clase" type="number"></td>
+            <td><input id="mes4_2clases" type="number"></td>
+        </tr>
+    </table>
+    </div>
+    <div style="display:flex; justify-content: center; padding-top:20px;">
+        <button onclick="CalcularCuotas()">Calcular</button>
+    </div>
+
+    
+
+    <div id="resultado"></div>
+
+    <script>
+        const resultadoElement = document.getElementById("resultado");
+
+        if(resultadoElement.textContent.trim() ===""){
+            resultadoElement.classList.add("hidden");
+        }
+
+        function CalcularCuotas(){
+            const precioSala = parseFloat(document.getElementById('precio-sala').value) || 5;
+            let totalPersonas = 0;
+            let nclases = 0;
+            let unaclase = 0;
+            let dosclases = 0;
+            let precioTotal = 0;
+            for ( let i=1; i<=4; i++) {
+                nclases += parseFloat(document.getElementById(`mes${i}_nclases`).value) || 0;
+                unaclase += parseFloat(document.getElementById(`mes${i}_1clase`).value) || 0;
+                dosclases += parseFloat(document.getElementById(`mes${i}_2clases`).value) || 0;
+            }
+           
+            totalPersonas = unaclase + (dosclases * 2);
+            
+            if (totalPersonas === 0){
+                document.getElementById('resultado').innerText = "Introduce datos válidos";
+                resultadoElement.classList.remove("hidden")
+                return;
+            }
+            
+            //Precio total por la sala y total personas
+            precioTotal = nclases * precioSala;
+           //dinero con decimales
+            const precioPorClaseReal = precioTotal / totalPersonas;
+            //redondeamos precio
+            const precioPorClase = Math.ceil(precioPorClaseReal *10)/10;
+            
+            //precio por persona redondeados
+            const precio1clase = precioPorClase;
+            const precio2clases = precioPorClase * 2;
+            
+            const total1clase = precioPorClase * unaclase;
+            const total2clases = precio2clases * dosclases;
+
+            const totalCobrado = precioPorClase * totalPersonas;
+            //calculamos la diferencia
+            const sobrante = totalCobrado - precioTotal;
+
+            resultadoElement.innerHTML=
+            `<p><strong> EN TOTAL HEMOS DADO:</strong> ${nclases} clases x ${precioSala}€ = <span id="totalPrecio">${precioTotal}</span></p>
+                <div class="resumen"><p><strong>TOTAL personas 1 clase</strong> = ${unaclase}</p>
+                <p><strong> TOTAL personas 2 clases</strong> = ${dosclases}</p>
+                <p><strong>TOTAL personas</strong> ${totalPersonas}</p>
+                </div>
+   
+            <table class="resultados">
+                <tr>
+                    <th>
+                        Personas con 1 clase
+                    </th>
+                    <th>
+                        Personas con 2 clases
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        ${precio1clase.toFixed(2)} € / mes
+                    </td>
+                    <td>
+                        ${precio2clases.toFixed(2)} € / mes
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        TOTAL = ${total1clase.toFixed(2)} €
+                    </td>
+                    <td>
+                        TOTAL = ${total2clases.toFixed(2)} €
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan ="2">
+                        total cobrado (${totalCobrado.toFixed(2)}) - precio sala (${precioTotal}) = <span id="sobrante-txt"> ${sobrante.toFixed(2)}</span>
+                    </td>
+                </tr>
+            </table>
+            <br>
+            <br>
+            <div class="explain">
+                <h3>¿CÓMO SE CUÁNTO TENGO QUE PAGAR?</h3>
+                <p><em>Para calcularlo simplemente hay que multiplicar:</p>
+                <p style="padding: 5px; border: 2px solid; background-color: #b1def64d; max-width: fit;">NÚMERO DE MESES ASISTIDOS X PRECIO SEGÚN TUS CLASES</p>
+                <p><u>Ejemplo:</u> Paquita ha venido a 2 clases durante 2 meses. En el cálculo del ejemplo, ha salido que las personas que han venido 2 clases tiene que pagar 4€/mes. <br>
+                Paquita pagará: 4€ x 2 meses = 8€.</em></p>
+
+            </div>`;
+
+           resultadoElement.classList.remove("hidden");
+
+        }
+
+    </script>
+</body>
+</html>
